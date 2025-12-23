@@ -7,7 +7,6 @@ scaler = pkl.load(open('scaler.pkl', 'rb'))
 model = pkl.load(open('model.pkl', 'rb'))
 #scaler = pkl.load(open('scaler.pkl', 'rb'))
 
-
 st.title("Diabetic Patient Prediction Project")
 
 gender = st.selectbox("Select Gender", ['Female', 'Male', 'Other'])
