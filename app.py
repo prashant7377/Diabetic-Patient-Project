@@ -1,11 +1,13 @@
 import streamlit as st
 import pandas as pd
-import pickle as pkl
+from joblib import load
+import os
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-scaler = pkl.load(open('scaler.pkl', 'rb'))
-model = pkl.load(open('model.pkl', 'rb'))
-#scaler = pkl.load(open('scaler.pkl', 'rb'))
+scaler = load(os.path.join(BASE_DIR, "scaler.pkl"))
+model = load(os.path.join(BASE_DIR, "model.pkl"))
+
 
 st.title("Diabetic Patient Prediction Project")
 
