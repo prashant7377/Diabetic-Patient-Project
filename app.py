@@ -5,8 +5,19 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-scaler = load(os.path.join(BASE_DIR, "scaler.pkl"))
-model = load(os.path.join(BASE_DIR, "model.pkl"))
+scaler_path = os.path.join(BASE_DIR, "scaler.pkl")
+model_path = os.path.join(BASE_DIR, "model.pkl")
+
+if not os.path.exists(scaler_path) or not os.path.exists(model_path):
+    st.error("Required model files not found. Make sure scaler.pkl and model.pkl exist in the project directory.")
+    st.stop()
+
+try:
+    scaler = load(scaler_path)
+    model = load(model_path)
+except Exception as e:
+    st.error(f"Failed loading model files: {e}")
+    st.stop()
 
 
 st.title("Diabetic Patient Prediction Project")
@@ -15,7 +26,7 @@ gender = st.selectbox("Select Gender", ['Female', 'Male', 'Other'])
 age = st.number_input("Enter Age", min_value = 0, max_value = 100, value = 50)
 hypertension = st.selectbox("Select Hypertension", ["Yes", "No"])
 heart_disease = st.selectbox("Select Heart Disease", ["Yes", "No"])
-smoking_history = st.selectbox("Select Smoking History", ["Naver", "No Info", "Former", "Not Current", "Ever", "Current"])
+smoking_history = st.selectbox("Select Smoking History", ["Never", "No Info", "Former", "Not Current", "Ever", "Current"])
 bmi = st.number_input("Enter BMI", min_value = 20, max_value = 50, value = 25)
 
 HbA1c_level = st.number_input("Enter HbA1c level", min_value = 5.0, max_value = 10.0, value = 6.0)
@@ -30,7 +41,7 @@ else:
     gender = 2
 
 
-if smoking_history == 'Naver':
+if smoking_history == 'Never':
     smoking_history = 0
 elif smoking_history == 'No Info':
     smoking_history = 1
